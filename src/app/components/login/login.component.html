@@ -1,0 +1,91 @@
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-3"></div>
+    <div class="col-6">
+      <form
+        (ngSubmit)="onSubmit(loginForm)"
+        #loginForm="ngForm"
+        class="border border-primary rounded p-5"
+      >
+        <h4 class="text-uppercase text-center mb-5">Login</h4>
+        <!-- Email input -->
+        <div class="form-outline mb-4">
+          <label class="form-label" for="form2Example1">Email address</label>
+          <input
+            type="email"
+            id="form2Example1"
+            class="form-control"
+            name="email"
+            ngModel
+            required
+            email
+            #modelEmail="ngModel"
+            [ngClass]="
+              modelEmail.invalid && modelEmail.dirty ? 'is-invalid' : ''
+            "
+          />
+          <div
+            *ngIf="modelEmail.invalid && modelEmail.dirty"
+            class="invalid-feedback"
+          >
+            Please enter a valid email address
+          </div>
+        </div>
+
+        <!-- Password input -->
+        <div class="form-outline mb-4">
+          <label class="form-label" for="form2Example2">Password</label>
+          <input
+            type="password"
+            id="form2Example2"
+            class="form-control"
+            name="password"
+            ngModel
+            required
+            minlength="3"
+            #modelPassword="ngModel"
+            [ngClass]="
+              modelPassword.invalid && modelPassword.dirty ? 'is-invalid' : ''
+            "
+          />
+
+          <div
+            *ngIf="modelPassword.errors?.['required'] && modelPassword.dirty"
+            class="invalid-feedback"
+          >
+            Please enter a valid password
+          </div>
+          <div
+            *ngIf="modelPassword?.errors?.['minlength']"
+            class="invalid-feedback"
+          >
+            Please enter atleast
+            {{ modelPassword?.errors?.['minlength']?.['requiredLength'] }}
+            characters.
+          </div>
+        </div>
+
+        <div *ngIf="error.length > 0" class="text-danger">
+          {{ error }
+        }</div>
+
+        <!-- Submit button -->
+        <div class="d-flex justify-content-center">
+          <button
+            type="submit"
+            class="btn btn-primary btn-block mb-4"
+            [disabled]="loginForm.invalid"
+          >
+            Sign in
+          </button>
+        </div>
+
+        <!-- Register buttons -->
+        <div class="text-start">
+          <p>Not a member? <a routerLink="/register">Register</a></p>
+        </div>
+      </form>
+    </div>
+    <div class="col-3"></div>
+  </div>
+</div>

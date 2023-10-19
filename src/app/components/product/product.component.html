@@ -1,0 +1,69 @@
+<div class="row">
+  <div
+    *ngFor="let product of products"
+    class="col-3 border border-primary rounded bg-primary-subtle p-2 my-2 offset-1 text-center"
+  >
+    <div class="thumb-wrapper">
+      <div class="img-box" (click)="showDetails(product.id)">
+        <img
+          [src]="product.image"
+          style="height: 300px"
+          class="img-fluid"
+          alt="product.title"
+        />
+      </div>
+      <div class="thumb-content">
+        <h4>{{ product.title }}</h4>
+
+        <p class="item-price">
+          <b>${{ product.price }}</b>
+        </p>
+        <div
+          *ngIf="getProductCartCount(product.id) === 0"
+          class="btn btn-primary"
+          (click)="addToCart(product.id)"
+        >
+          Add to Cart
+        </div>
+        <div
+          class="d-flex justify-content-center my-2 gap-2"
+          *ngIf="getProductCartCount(product.id) > 0"
+        >
+          <button class="btn btn-danger" (click)="addToCart(product.id, '-')">
+            -
+          </button>
+          <p>{{ getProductCartCount(product.id) }}</p>
+          <button class="btn btn-primary" (click)="addToCart(product.id)">
+            +
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<nav class="d-flex justify-content-center mt-5">
+  <ul class="pagination">
+    <li class="page-item">
+      <a
+        class="page-link"
+        [ngClass]="pageSize === 1 ? 'active' : ''"
+        (click)="changePage(1)"
+        >1</a
+      >
+    </li>
+    <li
+      class="page-item"
+      [ngClass]="pageSize === 2 ? 'active' : ''"
+      (click)="changePage(2)"
+    >
+      <a class="page-link">2</a>
+    </li>
+    <li
+      class="page-item"
+      [ngClass]="pageSize === 3 ? 'active' : ''"
+      (click)="changePage(3)"
+    >
+      <a class="page-link">3</a>
+    </li>
+  </ul>
+</nav>
